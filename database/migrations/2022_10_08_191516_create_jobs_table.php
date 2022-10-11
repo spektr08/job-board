@@ -18,10 +18,14 @@ return new class extends Migration
             $table->string('title');
             $table->string('status');
             $table->text('description');
-            $table->integer('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });
+
+
+
     }
 
     /**

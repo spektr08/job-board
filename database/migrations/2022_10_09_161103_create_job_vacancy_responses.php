@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('job_vacancy_responses', function (Blueprint $table) {
             $table->id();
             $table->string('content');
-            $table->integer('job_vacancy_id')->references('id')->on('job_vacancies')->onDelete('CASCADE');
-            $table->integer('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->bigInteger('job_vacancy_id')->unsigned();
+            $table->foreign('job_vacancy_id')->references('id')->on('job_vacancies')->onDelete('CASCADE');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->timestamps();
             $table->timestamp('notify_at')->nullable();
         });
