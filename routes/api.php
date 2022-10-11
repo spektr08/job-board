@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Api\HomeController;
 use \App\Http\Controllers\Api\RegisterController;
 use \App\Http\Controllers\Api\JobController;
+use \App\Http\Controllers\Api\FavoritesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,7 @@ Route::group(['middleware' => ['auth:api']],
         Route::delete('/jobs/{jobVacancy}', [JobController::class, 'delete']);
         Route::post('/jobs/response/{jobVacancy}', [JobController::class, 'response']);
         Route::delete('/jobs/response/{jobVacancyResponse}', [JobController::class, 'deleteResponse']);
+        Route::get('/favorite/users', [FavoritesController::class, 'indexUsers']);
+        Route::get('/favorite/jobs', [FavoritesController::class, 'indexJobs']);
     });
 
