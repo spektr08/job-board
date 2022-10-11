@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\UseCases\User\UserService;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        RateLimiter::for('notifyJobResponse', function ($job) {
+            return Limit::perHour(1)->by($job->jobVacancy->id);
+        });
     }
 }

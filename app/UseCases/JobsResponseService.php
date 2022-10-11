@@ -3,9 +3,11 @@
 namespace App\UseCases;
 
 use App\Http\Requests\JobVacancyResponse\JobVacancyResponseRequest;
+use App\Jobs\NotifyJobResponse;
 use Carbon\Carbon;
 use App\Models\JobVacancy;
 use App\Models\JobVacancyResponse;
+use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 
@@ -17,7 +19,7 @@ class JobsResponseService
         /** @var User $user */
         $user = User::findOrFail($userId);
         $jobVacancy = $this->getJobVacancy($job_id);
-        return DB::transaction(function () use ($request, $user, $jobVacancy) {
+        $jobVacancyResponse =  DB::transaction(function () use ($request, $user, $jobVacancy) {
 
             /** @var JobVacancyResponse $jobResponse */
             $jobResponse = JobVacancyResponse::make([
@@ -30,6 +32,8 @@ class JobsResponseService
             $user->update(['coins' => $user->coins - JobVacancyResponse::COST]);
             return $jobResponse;
         });
+        $this->sendEmail($jobVacancyResponse);
+        return $jobVacancyResponse;
     }
 
     public function remove(int $id,int $user_id): void
@@ -49,6 +53,12 @@ class JobsResponseService
     private function getJobVacancy(int $id): JobVacancy
     {
         return JobVacancy::findOrFail($id);
+    }
+
+    public function sendEmail(JobVacancyResponse $jobVacancyResponse): void
+    {
+
+        NotifyJobResponse::dispatch($jobVacancyResponse);
     }
 
 }
