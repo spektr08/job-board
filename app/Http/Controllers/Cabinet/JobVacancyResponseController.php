@@ -28,7 +28,7 @@ class JobVacancyResponseController extends Controller
     public function delete(JobVacancyResponse $jobVacancyResponse)
     {
         $this->checkAccess($jobVacancyResponse);
-        $this->service->remove($jobVacancyResponse->id,Auth::id());
+        $this->service->remove($jobVacancyResponse->id, Auth::id());
         return redirect()->route('cabinet.responses');
     }
 

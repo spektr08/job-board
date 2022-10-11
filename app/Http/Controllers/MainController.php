@@ -49,7 +49,8 @@ class MainController extends Controller
         return redirect()->route('index');
     }
 
-    private function canResponseAccess(JobVacancy $jobVacancy){
+    private function canResponseAccess(JobVacancy $jobVacancy)
+    {
         if(!$jobVacancy->canResponse(Auth::id())){
             throw new \DomainException("Can't response to this jobVacancy");
         }

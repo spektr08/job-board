@@ -67,6 +67,7 @@ class JobVacancyController extends Controller
     }
     public function delete(JobVacancy $jobVacancy)
     {
+        $this->checkAccess($jobVacancy);
         $jobVacancy->delete();
         return redirect()->route('cabinet.vacancies');
     }
