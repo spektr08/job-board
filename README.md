@@ -7,10 +7,10 @@ A simple job board where users can post their jobs and send a response to other 
 ### How install
 Set up env file then run commands:
 ```bash
-$ make docker-up
-$ make install
+$ sudo make docker-up
+$ sudo make install
 $ make perm
 $ make assets
-$ make passport
+$ sudo make passport
 $ sudo make listen
 ```
