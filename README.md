@@ -12,5 +12,5 @@ $ make install
 $ make perm
 $ make assets
 $ make passport
-$ make listen
+$ sudo make listen
 ```
