@@ -4,6 +4,7 @@ services:
         build:
             context: ./
             dockerfile: docker/nginx.docker
+        platform: linux/amd64 
         volumes:
             - ./:/var/www
             - ./docker/nginx/ssl:/etc/nginx/ssl
